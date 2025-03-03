@@ -26,11 +26,11 @@ export function ShotFilter({ value, onChange }: ShotFilterProps) {
   return (
     <div className="relative">
       <button
-        className="flex items-center gap-2 bg-white rounded-lg shadow-sm border border-slate-200/50 px-4 py-2"
+        className="flex items-center gap-2 bg-white rounded-lg shadow-sm border border-slate-200/50 px-4 py-2 h-[38px]"
         onClick={() => setIsOpen(!isOpen)}
       >
         <Filter size={18} className="text-rink-blue" />
-        <span>
+        <span className="text-sm">
           {value === null
             ? "Filter by Shots"
             : value === 5

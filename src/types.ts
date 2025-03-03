@@ -51,6 +51,7 @@ export interface Player {
   predictedGameShots: number;
   confidence: number;
   restDays: number;
+  headshot: string;
 }
 
 export interface Game {

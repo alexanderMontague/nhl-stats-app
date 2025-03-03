@@ -43,6 +43,12 @@ export function PlayerList({ players, onAddToBetBuilder }: PlayerListProps) {
               <PlusCircle size={20} />
             </button>
 
+            <img
+              src={player.headshot}
+              alt={player.name}
+              className="w-10 h-10 rounded"
+            />
+
             <div>
               <div className="font-medium flex items-center gap-2">
                 {player.name}
@@ -55,9 +61,13 @@ export function PlayerList({ players, onAddToBetBuilder }: PlayerListProps) {
               </div>
 
               <div className="text-sm text-slate-500 flex items-center gap-2">
-                <span>Avg: {player.avgShotsLast5.toFixed(1)}</span>
+                <span className="text-center">
+                  Avg L5: {player.avgShotsLast5.toFixed(1)}
+                </span>
                 <span>|</span>
-                <span>Season: {player.seasonShotsPerGame.toFixed(1)}</span>
+                <span className="text-center">
+                  Avg Season: {player.seasonShotsPerGame.toFixed(1)}
+                </span>
                 <span className="flex items-center gap-1">
                   {getShotTrendIcon(player)}
                 </span>
@@ -75,7 +85,7 @@ export function PlayerList({ players, onAddToBetBuilder }: PlayerListProps) {
 
             <div className="w-full sm:w-40 mt-1">
               {/* Confidence bar */}
-              <div className="relative h-2 bg-slate-200 rounded-full overflow-hidden">
+              <div className="relative h-3 bg-slate-200 rounded-full overflow-hidden">
                 <div
                   className="absolute top-0 left-0 h-full rounded-full"
                   style={{
@@ -88,7 +98,12 @@ export function PlayerList({ players, onAddToBetBuilder }: PlayerListProps) {
                         : "#f44336"
                     })`,
                   }}
-                />
+                >
+                  <span className="absolute top-[-1px] left-[3px] text-[10px] text-white">
+                    Confidence:{" "}
+                    {Number((player.confidence / 10) * 100).toFixed(1)}%
+                  </span>
+                </div>
               </div>
 
               <div className="flex justify-between text-xs mt-1">

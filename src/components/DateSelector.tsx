@@ -25,21 +25,24 @@ export function DateSelector({
     const newDate = new Date(selectedDate);
     newDate.setDate(newDate.getDate() + days);
     onDateChange(newDate);
+    setIsCalendarOpen(false);
   };
 
   const setToday = () => {
     onDateChange(new Date());
+    setIsCalendarOpen(false);
   };
 
   return (
-    <div className="flex items-center justify-between bg-white rounded-lg shadow-sm border border-slate-200/50 p-2">
+    <div className="flex items-center justify-between bg-white rounded-lg shadow-sm border border-slate-200/50 py-2 h-[38px]">
       <Button
         variant="ghost"
         size="sm"
         onClick={() => changeDate(-1)}
         aria-label="Previous day"
+        className="p-0"
       >
-        <ChevronLeft size={20} />
+        <ChevronLeft size={20} className="text-rink-blue" />
       </Button>
 
       <div
@@ -47,7 +50,7 @@ export function DateSelector({
         onClick={() => setIsCalendarOpen(!isCalendarOpen)}
       >
         <Calendar size={18} className="text-rink-blue" />
-        <span className="font-medium">{formatDate(selectedDate)}</span>
+        <span className="text-sm text-center">{formatDate(selectedDate)}</span>
       </div>
 
       <Button
@@ -55,8 +58,9 @@ export function DateSelector({
         size="sm"
         onClick={() => changeDate(1)}
         aria-label="Next day"
+        className="p-0"
       >
-        <ChevronRight size={20} />
+        <ChevronRight size={20} className="text-rink-blue" />
       </Button>
 
       {isCalendarOpen && (
@@ -76,10 +80,7 @@ export function DateSelector({
           {/* Simple calendar implementation */}
           <div className="grid grid-cols-7 gap-2">
             {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(day => (
-              <div
-                key={day}
-                className="text-center text-xs font-medium text-slate-500"
-              >
+              <div key={day} className="text-xs font-medium text-slate-500">
                 {day}
               </div>
             ))}

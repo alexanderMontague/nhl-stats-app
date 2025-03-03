@@ -15,12 +15,15 @@ export function useNHLData() {
       : "https://api.alexmontague.ca/nhl";
 
   const formatDateForAPI = (date: Date): string => {
-    return date.toISOString().split("T")[0];
+    return date.toLocaleDateString("en-CA", {
+      timeZone: "America/New_York",
+    });
   };
 
   const fetchNHLData = useCallback(async (date: Date) => {
     setIsLoading(true);
     setError(null);
+    console.log("fetching data for", date);
 
     try {
       const formattedDate = formatDateForAPI(date);
@@ -31,6 +34,11 @@ export function useNHLData() {
       }
 
       const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.message);
+      }
+
       setGames(data);
     } catch (err) {
       setError(
