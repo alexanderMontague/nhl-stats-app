@@ -3,6 +3,7 @@ import { Game, BetBuilderPlayer } from "../types";
 
 export function useNHLData() {
   const [games, setGames] = useState<Game[]>([]);
+  const [totalAccuracy, setTotalAccuracy] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +40,8 @@ export function useNHLData() {
         throw new Error(data.message);
       }
 
-      setGames(data);
+      setGames(data.gamesWithPlayers);
+      setTotalAccuracy(data.totalAccuracy);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
@@ -113,6 +115,7 @@ export function useNHLData() {
 
   return {
     games: filteredGames(),
+    totalAccuracy,
     isLoading,
     error,
     selectedDate,
