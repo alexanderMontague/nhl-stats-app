@@ -10,6 +10,7 @@ import Sticks from "./assets/sticks.svg";
 function App() {
   const {
     games,
+    totalAccuracy,
     isLoading,
     error,
     selectedDate,
@@ -33,6 +34,26 @@ function App() {
             <div className="flex items-center gap-2">
               <img src={Sticks} alt="NHL Logo" className="w-8 h-8" />
               <h1 className="text-2xl font-bold">NHL Shot Predictor</h1>
+
+              {/* Display total accuracy if available */}
+              {totalAccuracy > 0 && (
+                <div className="ml-2 flex items-center text-sm">
+                  <span className="text-slate-500 mr-1">
+                    Current Model Accuracy:
+                  </span>
+                  <span
+                    className={
+                      totalAccuracy >= 70
+                        ? "text-green-600 font-medium"
+                        : totalAccuracy >= 50
+                        ? "text-yellow-600 font-medium"
+                        : "text-red-600 font-medium"
+                    }
+                  >
+                    {totalAccuracy.toFixed(1)}%
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="flex items-center gap-2 w-full sm:w-auto justify-between">

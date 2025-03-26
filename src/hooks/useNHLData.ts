@@ -115,7 +115,7 @@ export function useNHLData() {
 
   return {
     games: filteredGames(),
-    totalAccuracy,
+    totalAccuracy: totalAccuracy * 100,
     isLoading,
     error,
     selectedDate,
