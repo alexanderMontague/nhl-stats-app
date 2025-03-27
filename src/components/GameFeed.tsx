@@ -1,12 +1,10 @@
-import { Game, BetBuilderPlayer } from "../types";
+import { Game, BetBuilderPlayer, GameStatus } from "../types";
 import { GameCard } from "./GameCard";
 import { Player } from "../types";
 
 interface GameFeedProps {
   games: Game[];
-  getGameStatus: (
-    startTimeUTC: string
-  ) => "upcoming" | "inProgress" | "finished";
+  getGameStatus: (startTimeUTC: string) => GameStatus;
   onAddToBetBuilder: (player: BetBuilderPlayer) => void;
 }
 

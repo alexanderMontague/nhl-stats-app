@@ -1,10 +1,10 @@
-import { Game, Player } from "../types";
+import { Game, Player, GameStatus } from "../types";
 import { PlayerList } from "./PlayerList";
 import { ExpandableCard } from "./ExpandableCard";
 
 interface GameCardProps {
   game: Game;
-  status: "upcoming" | "inProgress" | "finished";
+  status: GameStatus;
   onAddToBetBuilder: (
     player: Player & { gameTitle: string; gameId: number }
   ) => void;
@@ -22,11 +22,11 @@ export function GameCard({ game, status, onAddToBetBuilder }: GameCardProps) {
 
   const statusText = (): string => {
     switch (status) {
-      case "upcoming":
+      case GameStatus.Upcoming:
         return formatGameTime(game.startTimeUTC);
-      case "inProgress":
+      case GameStatus.InProgress:
         return "In Progress";
-      case "finished":
+      case GameStatus.Finished:
         return "Final";
     }
   };
@@ -74,6 +74,7 @@ export function GameCard({ game, status, onAddToBetBuilder }: GameCardProps) {
     >
       <PlayerList
         players={game.players}
+        status={status}
         onAddToBetBuilder={handleAddToBetBuilder}
       />
     </ExpandableCard>

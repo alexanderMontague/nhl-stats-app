@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Game, BetBuilderPlayer } from "../types";
+import { Game, BetBuilderPlayer, GameStatus } from "../types";
 
 export function useNHLData() {
   const [games, setGames] = useState<Game[]>([]);
@@ -56,24 +56,21 @@ export function useNHLData() {
     fetchNHLData(selectedDate);
   }, [selectedDate, fetchNHLData]);
 
-  const getGameStatus = useCallback(
-    (startTimeUTC: string): "upcoming" | "inProgress" | "finished" => {
-      const now = new Date();
-      const gameTime = new Date(startTimeUTC);
+  const getGameStatus = useCallback((startTimeUTC: string): GameStatus => {
+    const now = new Date();
+    const gameTime = new Date(startTimeUTC);
 
-      // Game duration is approximately 3 hours
-      const gameEndTime = new Date(gameTime.getTime() + 3 * 60 * 60 * 1000);
+    // Game duration is approximately 3 hours
+    const gameEndTime = new Date(gameTime.getTime() + 3 * 60 * 60 * 1000);
 
-      if (now < gameTime) {
-        return "upcoming";
-      } else if (now >= gameTime && now <= gameEndTime) {
-        return "inProgress";
-      } else {
-        return "finished";
-      }
-    },
-    []
-  );
+    if (now < gameTime) {
+      return GameStatus.Upcoming;
+    } else if (now >= gameTime && now <= gameEndTime) {
+      return GameStatus.InProgress;
+    } else {
+      return GameStatus.Finished;
+    }
+  }, []);
 
   const addToBetBuilder = (player: BetBuilderPlayer) => {
     if (!betBuilder.some(p => p.playerId === player.playerId)) {

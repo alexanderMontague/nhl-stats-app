@@ -37,6 +37,27 @@ export interface Team {
   id: number;
 }
 
+export interface PredictionRecord {
+  id: number;
+  game_date: string;
+  game_id: number;
+  game_title: string;
+  away_team_abbrev: string;
+  away_team_id: number;
+  home_team_abbrev: string;
+  home_team_id: number;
+  player_id: number;
+  player_name: string;
+  player_team_abbrev: string;
+  player_team_id: number;
+  predicted_shots: number;
+  confidence: number;
+  actual_shots: number | null;
+  successful: boolean | null;
+  created_at: string;
+  validated_at: string | null;
+}
+
 export interface Player {
   playerId: number;
   name: string;
@@ -53,6 +74,7 @@ export interface Player {
   restDays: number;
   headshot: string;
   pastPredictionAccuracy: number;
+  predictionRecord?: PredictionRecord;
 }
 
 export interface Game {
@@ -68,4 +90,10 @@ export interface Game {
 export interface BetBuilderPlayer extends Player {
   gameTitle: string;
   gameId: number;
+}
+
+export enum GameStatus {
+  Upcoming = "upcoming",
+  InProgress = "inProgress",
+  Finished = "finished",
 }

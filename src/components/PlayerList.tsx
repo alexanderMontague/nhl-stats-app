@@ -1,12 +1,17 @@
-import { Player } from "../types";
+import { Player, GameStatus } from "../types";
 import { PlusCircle } from "lucide-react";
 
 interface PlayerListProps {
   players: Player[];
+  status: GameStatus;
   onAddToBetBuilder: (player: Player) => void;
 }
 
-export function PlayerList({ players, onAddToBetBuilder }: PlayerListProps) {
+export function PlayerList({
+  players,
+  status,
+  onAddToBetBuilder,
+}: PlayerListProps) {
   // Sort players by predicted shots (highest first)
   const sortedPlayers = [...players].sort((a, b) => {
     return b.predictedGameShots - a.predictedGameShots;
@@ -25,6 +30,35 @@ export function PlayerList({ players, onAddToBetBuilder }: PlayerListProps) {
     } else {
       return <span className="text-yellow-500">→</span>;
     }
+  };
+
+  const actualShotInfo = (player: Player) => {
+    if (status === GameStatus.Upcoming || !player.predictionRecord) {
+      return null;
+    }
+
+    let shotText = "Current Game Shots: ";
+
+    if (status === GameStatus.Finished) {
+      shotText = "Actual Game Shots: ";
+    }
+
+    return (
+      <div className="flex justify-between text-xs mt-1">
+        <span>{shotText}</span>
+        <span
+          className={
+            player.predictionRecord.successful && status === GameStatus.Finished
+              ? "text-green-600 font-medium"
+              : status === GameStatus.InProgress
+              ? "text-yellow-600 font-medium"
+              : "text-red-600 font-medium"
+          }
+        >
+          {player.predictionRecord.actual_shots}
+        </span>
+      </div>
+    );
   };
 
   return (
@@ -108,6 +142,8 @@ export function PlayerList({ players, onAddToBetBuilder }: PlayerListProps) {
                     </span>
                   </div>
                 </div>
+
+                {actualShotInfo(player)}
 
                 {/* Add past prediction accuracy */}
                 {pastAccuracy > 0 && (

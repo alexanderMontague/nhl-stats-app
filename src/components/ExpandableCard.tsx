@@ -1,9 +1,9 @@
 import { ReactNode, useState } from "react";
 import { Card } from "./Card";
 import { ChevronDown, ChevronUp } from "lucide-react";
-
+import { GameStatus } from "../types";
 interface ExpandableCardProps {
-  status: "upcoming" | "inProgress" | "finished";
+  status: GameStatus;
   header: ReactNode;
   children: ReactNode;
   playerCount: number;

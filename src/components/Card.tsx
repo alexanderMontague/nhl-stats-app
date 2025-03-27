@@ -1,11 +1,11 @@
 import React from "react";
 import { cn } from "../utils/cn";
-
+import { GameStatus } from "../types";
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   cardRef?: React.Ref<HTMLDivElement>;
-  status?: "upcoming" | "inProgress" | "finished" | "none";
+  status?: GameStatus | "none";
 }
 
 export function Card({
